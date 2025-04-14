@@ -1,6 +1,6 @@
 import { desc, and, eq, isNull } from 'drizzle-orm';
 import { db } from './drizzle';
-import { activityLogs, teamMembers, teams, users } from './schema';
+import { activityLogs, teamMembers, teams, users, supportTickets, feedbackEntries } from './schema';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth/session';
 
@@ -126,4 +126,31 @@ export async function getTeamForUser(userId: number) {
   });
 
   return result?.teamMembers[0]?.team || null;
+}
+
+export async function createSupportTicket(
+  userId: number,
+  data: {
+    issueType: string;
+    severity: string;
+    description: string;
+  }
+) {
+  return await db.insert(supportTickets).values({
+    userId,
+    ...data,
+  });
+}
+
+export async function createFeedbackEntry(
+  userId: number,
+  data: {
+    rating: number;
+    feedback: string;
+  }
+) {
+  return await db.insert(feedbackEntries).values({
+    userId,
+    ...data,
+  });
 }

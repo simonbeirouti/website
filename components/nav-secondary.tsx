@@ -71,7 +71,10 @@ export function NavSecondary({
                       </DialogDescription>
                     </DialogHeader>
                     <div className="px-4 sm:px-0 -my-4">
-                      {item.title === "Support" ? <SupportForm /> : <FeedbackForm />}
+                      {item.title === "Support" ? 
+                        <SupportForm onClose={() => setOpen(false)} /> : 
+                        <FeedbackForm onClose={() => setOpen(false)} />
+                      }
                     </div>
                   </DialogContent>
                 </Dialog>
@@ -98,7 +101,10 @@ export function NavSecondary({
                     </DrawerDescription>
                   </DrawerHeader>
                   <div className="px-4 sm:px-0 -my-4">
-                    {item.title === "Support" ? <SupportForm /> : <FeedbackForm />}
+                    {item.title === "Support" ? 
+                      <SupportForm onClose={() => setOpen(false)} /> : 
+                      <FeedbackForm onClose={() => setOpen(false)} />
+                    }
                   </div>
                   <DrawerFooter className="">
                     <DrawerClose asChild>

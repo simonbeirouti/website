@@ -2,8 +2,8 @@
 
 import * as React from "react"
 
-import { NavMain } from "@/components/nav-main"
-// import { NavProjects } from "@/components/nav-projects"
+import { NavGroup } from "@/components/nav-group"
+import { NavProjects } from "@/components/nav-projects"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
@@ -30,8 +30,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={dashboardRoutes.navMain} />
-        {/* <NavProjects projects={dashboardRoutes.projects} /> */}
+        <NavGroup groupTitle="Platform" items={dashboardRoutes.navMain} />
+        <NavGroup groupTitle="Profile" items={dashboardRoutes.profile} />
+        <NavGroup groupTitle="Team" items={dashboardRoutes.team} />
       </SidebarContent>
       <SidebarFooter>
         <NavSecondary items={dashboardRoutes.navSecondary} className="mt-auto" />

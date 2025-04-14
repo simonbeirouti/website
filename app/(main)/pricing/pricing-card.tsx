@@ -1,5 +1,4 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { checkoutAction } from '@/lib/payments/actions';
 import { SubmitButton } from './submit-button';
 
@@ -54,10 +53,12 @@ export function PricingCard({
                         </li>
                     ))}
                 </ul>
-                <form action={checkoutAction} className="mt-6">
-                    <input type="hidden" name="priceId" value={priceId} />
-                    <SubmitButton />
-                </form>
+                {priceId && (
+                    <form action={checkoutAction} className="mt-6">
+                        <input type="hidden" name="priceId" value={priceId} />
+                        <SubmitButton />
+                    </form>
+                )}
             </CardContent>
         </Card>
     );

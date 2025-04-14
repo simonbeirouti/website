@@ -24,6 +24,10 @@ export async function createCheckoutSession({
     redirect(`/auth?redirect=checkout&priceId=${priceId}`);
   }
 
+  // Get the price details to determine if it's a subscription or one-time purchase
+  const price = await stripe.prices.retrieve(priceId);
+  const isSubscription = price.type === 'recurring';
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [
@@ -32,22 +36,19 @@ export async function createCheckoutSession({
         quantity: 1
       }
     ],
-    mode: 'subscription',
+    mode: isSubscription ? 'subscription' : 'payment',
     success_url: `${process.env.BASE_URL}/api/stripe/checkout?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.BASE_URL}/pricing`,
     customer: team.stripeCustomerId || undefined,
     client_reference_id: user.id.toString(),
-    allow_promotion_codes: true,
-    subscription_data: {
-      trial_period_days: 14
-    }
+    allow_promotion_codes: true
   });
 
   redirect(session.url!);
 }
 
 export async function createCustomerPortalSession(team: Team) {
-  if (!team.stripeCustomerId || !team.stripeProductId) {
+  if (!team.stripeCustomerId) {
     redirect('/pricing');
   }
 
@@ -57,19 +58,6 @@ export async function createCustomerPortalSession(team: Team) {
   if (configurations.data.length > 0) {
     configuration = configurations.data[0];
   } else {
-    const product = await stripe.products.retrieve(team.stripeProductId);
-    if (!product.active) {
-      throw new Error("Team's product is not active in Stripe");
-    }
-
-    const prices = await stripe.prices.list({
-      product: product.id,
-      active: true
-    });
-    if (prices.data.length === 0) {
-      throw new Error("No active prices found for the team's product");
-    }
-
     configuration = await stripe.billingPortal.configurations.create({
       business_profile: {
         headline: 'Manage your subscription'
@@ -78,13 +66,7 @@ export async function createCustomerPortalSession(team: Team) {
         subscription_update: {
           enabled: true,
           default_allowed_updates: ['price', 'quantity', 'promotion_code'],
-          proration_behavior: 'create_prorations',
-          products: [
-            {
-              product: product.id,
-              prices: prices.data.map((price) => price.id)
-            }
-          ]
+          proration_behavior: 'create_prorations'
         },
         subscription_cancel: {
           enabled: true,
@@ -99,6 +81,12 @@ export async function createCustomerPortalSession(team: Team) {
               'other'
             ]
           }
+        },
+        payment_method_update: {
+          enabled: true
+        },
+        invoice_history: {
+          enabled: true
         }
       }
     });
@@ -125,7 +113,7 @@ export async function handleSubscriptionChange(
     return;
   }
 
-  if (status === 'active' || status === 'trialing') {
+  if (status === 'active') {
     const plan = subscription.items.data[0]?.plan;
     await updateTeamSubscription(team.id, {
       stripeSubscriptionId: subscriptionId,
@@ -147,7 +135,7 @@ export async function getStripePrices() {
   const prices = await stripe.prices.list({
     expand: ['data.product'],
     active: true,
-    limit: 20
+    limit: 100
   });
 
   return prices.data.map((price) => ({
@@ -156,7 +144,8 @@ export async function getStripePrices() {
       typeof price.product === 'string' ? price.product : price.product.id,
     unitAmount: price.unit_amount,
     currency: price.currency,
-    interval: price.recurring?.interval
+    interval: price.recurring?.interval,
+    type: price.type
   }));
 }
 

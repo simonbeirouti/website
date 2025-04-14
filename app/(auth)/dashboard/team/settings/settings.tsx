@@ -35,14 +35,12 @@ export function TeamSettings({ teamData }: { teamData: TeamDataWithMembers }) {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
               <div className="mb-4 sm:mb-0">
                 <p className="font-medium">
-                  Current Plan: {teamData.planName || 'Free'}
+                  Current Plan: {teamData.planName}
                 </p>
                 <p className="text-sm text-muted-foreground">
                   {teamData.subscriptionStatus === 'active'
                     ? 'Billed monthly'
-                    : teamData.subscriptionStatus === 'trialing'
-                      ? 'Trial period'
-                      : 'No active subscription'}
+                    : 'No active subscription'}
                 </p>
               </div>
               <form action={customerPortalAction}>

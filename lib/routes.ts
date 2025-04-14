@@ -13,6 +13,8 @@ import {
     Sparkles,
     SquareTerminal,
     Users,
+    User,
+    User2,
 } from "lucide-react"
 
 export const navRoutes = [
@@ -23,33 +25,18 @@ export const navRoutes = [
 ];
 
 export const dashboardRoutes = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
-    userNav: [
-        {
-            title: "Activity",
-            url: "/dashboard/activity",
-            icon: BadgeCheck,
-        },
-        {
-            title: "Settings",
-            url: "/dashboard/settings", 
-            icon: Settings2,
-        },
-        // {
-        //     title: "Notifications",
-        //     url: "/notifications",
-        //     icon: Bell,
-        // },
-        // {
-        //     title: "Upgrade",
-        //     url: "/upgrade",
-        //     icon: Sparkles,
-        // }
-    ],
+    // userNav: [
+    //     {
+    //         title: "Activity",
+    //         url: "/dashboard/activity",
+    //         icon: BadgeCheck,
+    //     },
+    //     {
+    //         title: "Settings",
+    //         url: "/dashboard/settings", 
+    //         icon: Settings2,
+    //     },
+    // ],
     navMain: [
         {
             title: "Dashboard",
@@ -67,71 +54,50 @@ export const dashboardRoutes = {
             //     // },
             // ],
         },
+    ],
+    team: [
         {
-            title: "Teams",
-            url: "/dashboard/teams",
-            icon: Bot,
+            title: "Team",
+            url: "/dashboard/team",
+            icon: Frame,
             // items: [
             //     {
-            //         title: "Genesis",
-            //         url: "#",
+            //         title: "List",
+            //         url: "/dashboard/team/list",
             //     },
             //     {
-            //         title: "Explorer",
-            //         url: "#",
-            //     },
-            //     {
-            //         title: "Quantum",
-            //         url: "#",
+            //         title: "Settings",
+            //         url: "/dashboard/team/settings",
             //     },
             // ],
         },
-        // {
-        //     title: "Documentation",
-        //     url: "#",
-        //     icon: BookOpen,
-        //     items: [
-        //         {
-        //             title: "Introduction",
-        //             url: "#",
-        //         },
-        //         {
-        //             title: "Get Started",
-        //             url: "#",
-        //         },
-        //         {
-        //             title: "Tutorials",
-        //             url: "#",
-        //         },
-        //         {
-        //             title: "Changelog",
-        //             url: "#",
-        //         },
-        //     ],
-        // },
-        // {
-        //     title: "Settings",
-        //     url: "#",
-        //     icon: Settings2,
-        //     items: [
-        //         {
-        //             title: "General",
-        //             url: "#",
-        //         },
-        //         {
-        //             title: "Team",
-        //             url: "#",
-        //         },
-        //         {
-        //             title: "Billing",
-        //             url: "#",
-        //         },
-        //         {
-        //             title: "Limits",
-        //             url: "#",
-        //         },
-        //     ],
-        // },
+        {
+            title: "Team List",
+            url: "/dashboard/team/list",
+            icon: User2,
+        },
+        {
+            title: "Settings",
+            url: "/dashboard/team/settings",
+            icon: Settings2,
+        },
+    ],
+    profile: [
+        {
+            title: "Profile",
+            url: "/dashboard/profile",
+            icon: User,
+        },
+        {
+            title: "Activity",
+            url: "/dashboard/profile/activity",
+            icon: BadgeCheck,
+        },
+        {
+            title: "Settings",
+            url: "/dashboard/profile/settings",
+            icon: Settings2,
+        },
     ],
     navSecondary: [
         {
@@ -145,21 +111,4 @@ export const dashboardRoutes = {
             icon: Send,
         },
     ],
-    // projects: [
-    //     {
-    //         name: "Design Engineering",
-    //         url: "#",
-    //         icon: Frame,
-    //     },
-    //     {
-    //         name: "Sales & Marketing",
-    //         url: "#",
-    //         icon: PieChart,
-    //     },
-    //     {
-    //         name: "Travel",
-    //         url: "#",
-    //         icon: Map,
-    //     },
-    // ],
 }

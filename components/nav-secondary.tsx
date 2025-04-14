@@ -20,11 +20,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
 import { type LucideIcon } from "lucide-react"
-
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -32,6 +28,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import SupportForm from "@/components/support-form"
+import FeedbackForm from "@/components/feedback-form"
 
 export function NavSecondary({
   items,
@@ -63,24 +61,18 @@ export function NavSecondary({
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
+                  <DialogContent className="sm:max-w-[500px]">
                     <DialogHeader>
                       <DialogTitle>{item.title}</DialogTitle>
                       <DialogDescription>
-                        This is a dialog for {item.title.toLowerCase()}.
+                        {item.title === "Support"
+                          ? "Submit a support request and we'll get back to you soon."
+                          : "We value your feedback to help us improve our services."}
                       </DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid gap-2">
-                        <Label htmlFor="name">Name</Label>
-                        <Input id="name" defaultValue="Enter your name" />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="message">Message</Label>
-                        <Input id="message" defaultValue="Enter your message" />
-                      </div>
+                    <div className="px-4 sm:px-0 -my-4">
+                      {item.title === "Support" ? <SupportForm /> : <FeedbackForm />}
                     </div>
-                    <Button type="submit">Save changes</Button>
                   </DialogContent>
                 </Dialog>
               )
@@ -100,24 +92,18 @@ export function NavSecondary({
                   <DrawerHeader className="text-left">
                     <DrawerTitle>{item.title}</DrawerTitle>
                     <DrawerDescription>
-                      This is a drawer for {item.title.toLowerCase()}.
+                      {item.title === "Support"
+                        ? "Submit a support request and we'll get back to you soon."
+                        : "We value your feedback to help us improve our services."}
                     </DrawerDescription>
                   </DrawerHeader>
-                  <div className="grid gap-4 py-4 px-4">
-                    <div className="grid gap-2">
-                      <Label htmlFor="name">Name</Label>
-                      <Input id="name" defaultValue="Enter your name" />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="message">Message</Label>
-                      <Input id="message" defaultValue="Enter your message" />
-                    </div>
+                  <div className="px-4 sm:px-0 -my-4">
+                    {item.title === "Support" ? <SupportForm /> : <FeedbackForm />}
                   </div>
-                  <DrawerFooter className="pt-2">
+                  <DrawerFooter className="">
                     <DrawerClose asChild>
                       <Button variant="outline">Cancel</Button>
                     </DrawerClose>
-                    <Button type="submit">Save changes</Button>
                   </DrawerFooter>
                 </DrawerContent>
               </Drawer>
@@ -126,21 +112,5 @@ export function NavSecondary({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
-}
-
-function SupportForm() {
-  return (
-    <div>
-      <h1>Support</h1>
-    </div>
-  )
-}
-
-function FeedbackForm() {
-  return (
-    <div>
-      <h1>Feedback</h1>
-    </div>
   )
 }

@@ -21,8 +21,8 @@ export default function Bread() {
         }
         
         // Check in userNav
-        const userNavItem = dashboardRoutes.userNav.find(item => item.url === path)
-        if (userNavItem) return userNavItem.title
+        // const userNavItem = dashboardRoutes.userNav.find(item => item.url === path)
+        // if (userNavItem) return userNavItem.title
         
         // Default to the last part of the path
         return path.split('/').pop()?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Dashboard'

@@ -45,13 +45,28 @@ export default function PricingDisplay({ stripePrices, stripeProducts }: Pricing
 
     // Helper function to find Stripe price for a product
     const findStripePrice = (productName: string, prices: StripePrice[], interval?: string) => {
-        const product = stripeProducts.find(p => p.name.includes(productName));
-        if (!product) return null;
-        
-        return prices.find(p => 
-            p.productId === product.id && 
-            (!interval || p.interval === interval)
+        // Normalize product names for comparison
+        const normalizedProductName = productName.toLowerCase().replace(/ tier$/, '');
+        const product = stripeProducts.find(p => 
+            p.name.toLowerCase().includes(normalizedProductName) || 
+            normalizedProductName.includes(p.name.toLowerCase())
         );
+        
+        if (!product) {
+            console.warn(`No Stripe product found for: ${productName}`);
+            return null;
+        }
+        
+        // For subscription tiers, match by interval
+        if (interval) {
+            return prices.find(p => 
+                p.productId === product.id && 
+                p.interval === interval
+            );
+        }
+        
+        // For one-time purchases, find the first matching price
+        return prices.find(p => p.productId === product.id);
     };
 
     return (

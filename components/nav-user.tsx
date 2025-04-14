@@ -71,7 +71,7 @@ export function NavUser() {
             align="end"
             sideOffset={4}
           >
-            {dashboardRoutes.userNav.map((item) => (
+            {/* {dashboardRoutes.userNav.map((item) => (
               <DropdownMenuItem key={item.title} asChild>
                 <Link href={item.url}>
                   <item.icon />
@@ -79,7 +79,7 @@ export function NavUser() {
                 </Link>
               </DropdownMenuItem>
             ))}
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator /> */}
             <form action={handleSignOut} className="w-full">
               <button type="submit" className="flex w-full">
                 <DropdownMenuItem className="w-full flex-1 cursor-pointer">
